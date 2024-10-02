@@ -15,10 +15,4 @@ public class LectureDTO {
     public void setLectureId(long lectureId) {
         this.lectureId = lectureId;
     }
-    public String getLectureNm() {
-        return lectureNm;
-    }
-    public void setLectureNm(String lectureNm) {
-        this.lectureNm = lectureNm;
-    }
 }

@@ -1,4 +1,4 @@
-package com.tdd.domain;
+package com.tdd.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

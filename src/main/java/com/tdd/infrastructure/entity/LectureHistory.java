@@ -1,4 +1,4 @@
-package com.tdd.domain;
+package com.tdd.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class LectureHistory {
     @JoinColumn(name="student_id")
     private Student studentId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="lecture_id")
     private Lecture lectureId;
 

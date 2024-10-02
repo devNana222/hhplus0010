@@ -1,18 +1,17 @@
 package com.tdd.presentation;
 
 import com.tdd.application.LectureApplyService;
+import com.tdd.application.LectureHistoryService;
 import com.tdd.application.LectureService;
-import com.tdd.application.StudentService;
-import com.tdd.domain.LectureHistory;
-import com.tdd.domain.Student;
+import com.tdd.infrastructure.entity.LectureHistory;
 import com.tdd.presentation.dto.LectureApplyDTO;
 import com.tdd.application.command.LectureCommand;
-import com.tdd.domain.Lecture;
-import com.tdd.presentation.dto.LectureDTO;
-import com.tdd.presentation.dto.LectureHistoryDTO;
+import com.tdd.infrastructure.entity.Lecture;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +20,16 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/lecture")
 @RequiredArgsConstructor
+@Validated
 public class LectureController {
 
     private final LectureApplyService lectureApplyService;
     private final LectureService lectureService;
-    private final StudentService studentService;
+    private final LectureHistoryService lectureHistoryService;
 
+    //특강 신청 API
     @PostMapping("/apply")
-    public ResponseEntity<String> applyLecture(@RequestBody LectureApplyDTO lectureApplyDTO) { //request객체와 response객체는 controller에서 사용하므로 presentation이 맞는 것 같다.
+    public ResponseEntity<String> applyLecture(@RequestBody LectureApplyDTO lectureApplyDTO) {
         log.info("applyLecture");
         LectureCommand.Apply command = LectureCommand.Apply.from(
                 lectureApplyDTO.getStudentId(),
@@ -38,17 +39,19 @@ public class LectureController {
         return ResponseEntity.ok("Lecture application successful.");
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<Lecture>> getAvailableLectures(){
-        LectureCommand.Available command = new LectureCommand.Available(true);
+    //신청 가능 리스트 조회API
+    @GetMapping("/list/{date}")
+    public ResponseEntity<List<Lecture>> getAvailableLectures(@Valid String date) {
+        LectureCommand.Date command = new LectureCommand.Date(date);
         List<Lecture> availableLectures = lectureService.getAvailableLectures(command);
         return ResponseEntity.ok(availableLectures);
     }
 
-    @GetMapping("/list/{studentId}")
-    public ResponseEntity<List<Student>> getLectureApplicationHistory(@PathVariable Long studentId){
+    //신청 완료 목록 조회 API
+    @GetMapping("/{studentId}/list")
+    public ResponseEntity<List<LectureHistory>> getLectureApplicationHistory(@PathVariable Long studentId) {
         LectureCommand.History command = new LectureCommand.History(studentId);
-        List<Student> history = studentService.getStudentHistory(command);
+        List<LectureHistory> history = lectureHistoryService.getStudentHistory(command);
         return ResponseEntity.ok(history);
     }
 }

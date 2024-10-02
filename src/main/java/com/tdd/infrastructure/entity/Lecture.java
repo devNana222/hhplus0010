@@ -1,10 +1,11 @@
-package com.tdd.domain;
+package com.tdd.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -24,6 +25,7 @@ public class Lecture {
     @Column(name="lecture_nm", nullable = false)
     private String lectureNm;
 
+    @ColumnDefault("30L")
     @Column(name="capacity")
     private Long capacity;
 

@@ -2,15 +2,17 @@ package com.tdd.application.command;
 
 import com.tdd.domain.exception.BusinessException;
 import com.tdd.domain.exception.LectureErrorCode;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-public class LectureCommand {//서비스에서 쓰는 것 >알거라고 생각함 >쫌따가
+public class LectureCommand {
 
     public record Apply(Long studentId, Long lectureId){
         public Apply{
-            if(studentId == null){
+            if(studentId == null || studentId == 0L){
                 throw new BusinessException(LectureErrorCode.INVALID_STUDENT);
             }
-            if(lectureId == null){
+            if(lectureId == null|| lectureId == 0L){
                 throw new BusinessException(LectureErrorCode.INVALID_LECTURE);
             }
         }
@@ -20,19 +22,21 @@ public class LectureCommand {//서비스에서 쓰는 것 >알거라고 생각�
         }
     }
 
-    public static class Available {
-        private boolean available;
+    public static class Date {
+        @Pattern(regexp = "^$|\\\\d{4}-\\\\d{2}-\\\\d{2}", message = "날짜 형식이 잘못되었습니다. yyyy-MM-dd 형식이어야 합니다.")
+        @Size(max = 10, message = "날짜는 최대 10자까지 입력 가능합니다.")
+        private final String date;
 
-        public Available(boolean available) {
-            this.available = available;
+        public Date(String date) {
+            this.date = date;
         }
-        public boolean isAvailable() {
-            return available;
+        public String getDate() {
+            return date;
         }
-
     }
+
     public static class History {
-        private final Long studentId;
+        private final Long studentId; // 학생 ID를 저장할 필드
 
         public History(Long studentId) {
             this.studentId = studentId;
