@@ -122,18 +122,12 @@
 현재 프로젝트에서는 싱글 DB이기 때문에 적용되지 않는 문제라고 하나, 분산 DB환경이라면 "샤딩" 또는 "Replication" 등을 통해 해결할 수 있다고 한다. 
 
 ### 5) 테스트 코드 
-![img_5.png](img_5.png)
+
 * <code>java.util.concurrent.CountDownLatch(int count)</code>(다른 스레드를 기다리는 방법) : 주어진 카운트로 초기화 된다. <br/>
 <code>await</code>메서드를 실행하면 해당 스레드는 다른 스레드에서 CountDown 메서드 호출로 인해 현재 카운트가 0이 될 때 까지 대기한다. <br/>
  그 후에는 대기 중인 스레드가 해제된다. 
 * 30명 정원을 설정해 두고 40개의 스레드를 실행하였다. > 간혹 성공하는 경우도 있지만 30 이상으로 실행되는 경우도 있다.
 * Lecture테이블이 Transaction으로 점거당하고 있어 같은 레벨의 스레드들이 capacity를 <code>null</code>로 불러오는 현상이 계속 발생하였다. 
     * <code>LectureJpaAdaptor</code>를 mocking 하여 가상 객체를 만든 후 테스트를 하여 해결하였다. 
-![img_2.png](img_2.png)
-**[성공케이스]**<br/><br/>
-![img_6.png](img_6.png)<br/><br/>
-**[실패케이스]**
-## 풀리지 않는 의문 
-- 왜 테스트가 간헐적으로 성공, 실패가 되는것일까? 
-
+![img_7.png](img_7.png)
 
