@@ -1,16 +1,13 @@
 package com.tdd.infrastructure.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
 @Entity
-@Data //getter, setter 자동생성
+@Getter
 @NoArgsConstructor //기본 생성자 추가
 @AllArgsConstructor //모든 필드에 대한 생성자 추가
 @Table(name="LECTURE")
@@ -34,4 +31,8 @@ public class Lecture {
 
     @Column(name="instructor")
     private String instructor;
+
+    public void LectureCapacityReduce() {
+        this.capacity --;
+    }
 }

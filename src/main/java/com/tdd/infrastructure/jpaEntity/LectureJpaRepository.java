@@ -20,8 +20,9 @@ public interface LectureJpaRepository extends JpaRepository<Lecture, Long> {
     List<Lecture> findAvailableLecturesByDate(LocalDate date);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT l FROM Lecture l WHERE l.lectureId = :lectureId")
+    @Query("SELECT l FROM Lecture l WHERE l.lectureId = :lectureId ")
     Optional<Lecture> findByLectureIdWithLock(long lectureId);
 
     Lecture save(Lecture lecture);
 }
+

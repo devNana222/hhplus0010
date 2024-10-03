@@ -1,6 +1,7 @@
 package com.tdd.infrastructure;
 
 import com.tdd.domain.*;
+import com.tdd.infrastructure.entity.Lecture;
 import com.tdd.infrastructure.entity.LectureHistory;
 import com.tdd.infrastructure.entity.Student;
 import com.tdd.infrastructure.jpaEntity.LectureHistoryJpaRepository;
@@ -21,9 +22,10 @@ public class LectureHistoryJpaAdaptor implements LectureHistoryRepository {
     }
 
     @Override
-    public Long countByLectureId(long lectureId){
+    public Long countByLectureId(Lecture lectureId){
         return lectureHistoryJpaRepository.countByLectureId(lectureId);
     }
+
     @Override
     public LectureHistory save(LectureHistory lecture){
         return lectureHistoryJpaRepository.save(lecture);

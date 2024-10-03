@@ -37,4 +37,3 @@ public class LectureHistory {
         this.lectureId = lectureId;
     }
 }
-//DIP를 왜 쓰는가? > 종속성 도치

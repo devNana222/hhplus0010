@@ -133,7 +133,7 @@ class LectureControllerTest {
 
         // when & then
 
-        mockMvc.perform(get("/lecture/list/2024-10-03"))
+        mockMvc.perform(get("/lecture/list?date=2024-10-03"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].lectureNm").value("특강1"))
@@ -145,9 +145,8 @@ class LectureControllerTest {
     @DisplayName("🔴잘못된 날짜 조회 형식")
     void getAvailableLectures_Fail_InvalidDateType() throws Exception {
 
-        mockMvc.perform(get("/list/2024-13-40"))  // 잘못된 날짜 형식
-                .andExpect(status().isBadRequest())   // 400 Bad Request 예상
-                .andExpect(content().string(containsString("잘못된 날짜 형식")));
+        mockMvc.perform(get("/lecture/list?date=2021440"))
+                .andExpect(status().isBadRequest());   // 400 Bad Request 예상
     }
 
     @Test

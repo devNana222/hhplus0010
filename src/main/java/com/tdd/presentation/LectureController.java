@@ -3,6 +3,7 @@ package com.tdd.presentation;
 import com.tdd.application.LectureApplyService;
 import com.tdd.application.LectureHistoryService;
 import com.tdd.application.LectureService;
+import com.tdd.domain.exception.BusinessException;
 import com.tdd.infrastructure.entity.LectureHistory;
 import com.tdd.presentation.dto.LectureApplyDTO;
 import com.tdd.application.command.LectureCommand;
@@ -30,7 +31,7 @@ public class LectureController {
     //특강 신청 API
     @PostMapping("/apply")
     public ResponseEntity<String> applyLecture(@RequestBody LectureApplyDTO lectureApplyDTO) {
-        log.info("applyLecture");
+
         LectureCommand.Apply command = LectureCommand.Apply.from(
                 lectureApplyDTO.getStudentId(),
                 lectureApplyDTO.getLectureId()
@@ -40,9 +41,9 @@ public class LectureController {
     }
 
     //신청 가능 리스트 조회API
-    @GetMapping("/list/{date}")
-    public ResponseEntity<List<Lecture>> getAvailableLectures(@Valid String date) {
-        LectureCommand.Date command = new LectureCommand.Date(date);
+    @GetMapping("/list")
+    public ResponseEntity<List<Lecture>> getAvailableLectures(@ModelAttribute @Valid LectureCommand.Date command) {
+        //LectureCommand.Date command = new LectureCommand.Date(date);
         List<Lecture> availableLectures = lectureService.getAvailableLectures(command);
         return ResponseEntity.ok(availableLectures);
     }

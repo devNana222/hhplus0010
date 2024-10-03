@@ -20,9 +20,4 @@ public class StudentJpaAdaptor implements StudentRepository {
     public Optional<Student> findByStudentId(long studentId){
         return studentJpaRepository.findByStudentId(studentId);
     }
-
-    @Override
-    public List<LectureHistory> findAllByStudentId(Student student){
-        return studentJpaRepository.findAllByStudentId(student);
-    }
 }

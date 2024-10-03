@@ -31,18 +31,8 @@ class LectureServiceTest {
     void setUp() {
         date = LocalDate.parse("2024-09-30", DateTimeFormatter.ISO_DATE);
 
-        mockLecture1 = new Lecture();
-        mockLecture1.setLectureNm("특강1");
-        mockLecture1.setCapacity(30L);
-        mockLecture1.setEnrollStartDate(date);
-
-        mockLecture2 = new Lecture();
-        mockLecture2.setLectureNm("특강2");
-        mockLecture2.setCapacity(25L);
-        mockLecture2.setEnrollStartDate(date);
-
-        // lectureAdaptor Mock 설정
-
+        mockLecture1 = new Lecture().builder().lectureNm("특강1").capacity(30L).enrollStartDate(date).build();
+        mockLecture2 = new Lecture().builder().lectureNm("특강2").capacity(25L).enrollStartDate(date).build();
     }
 
     @Test
@@ -65,15 +55,9 @@ class LectureServiceTest {
         Lecture mockLecture3;
         Lecture mockLecture4;
 
-        mockLecture3 = new Lecture();
-        mockLecture3.setLectureNm("특강3");
-        mockLecture3.setCapacity(25L);
-        mockLecture3.setEnrollStartDate(LocalDate.parse("2024-10-01", DateTimeFormatter.ISO_DATE));
+        mockLecture3 = new Lecture().builder().lectureNm("특강3").capacity(30L).enrollStartDate(LocalDate.parse("2024-10-01", DateTimeFormatter.ISO_DATE)).build();
+        mockLecture4 = new Lecture().builder().lectureNm("특강4").capacity(25L).enrollStartDate(LocalDate.parse("2024-10-02", DateTimeFormatter.ISO_DATE)).build();
 
-        mockLecture4 = new Lecture();
-        mockLecture4.setLectureNm("특강4");
-        mockLecture4.setCapacity(5L);
-        mockLecture4.setEnrollStartDate(LocalDate.parse("2024-10-02", DateTimeFormatter.ISO_DATE));
 
         when(lectureJpaAdaptor.findAll()).thenReturn(Arrays.asList(mockLecture1, mockLecture2, mockLecture3, mockLecture4));
 

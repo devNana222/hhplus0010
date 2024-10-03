@@ -17,16 +17,13 @@ public class LectureService {
 
 
     private final LectureJpaAdaptor lectureJpaAdaptor;
-    private final LectureHistoryJpaAdaptor lectureHistoryJpaAdaptor;
-
-    public LectureService(LectureJpaAdaptor lectureJpaAdaptor, LectureHistoryJpaAdaptor lectureHistoryJpaAdaptor) {
+    public LectureService(LectureJpaAdaptor lectureJpaAdaptor) {
         this.lectureJpaAdaptor = lectureJpaAdaptor;
-        this.lectureHistoryJpaAdaptor = lectureHistoryJpaAdaptor;
     }
 
 
     public List<Lecture> getAvailableLectures(LectureCommand.Date command){
-        if(command.getDate() != null || command.getDate() != ""){
+        if(command.getDate() != null || !command.getDate().isEmpty()){
             LocalDate localDate;
             localDate = LocalDate.parse(command.getDate(), DateTimeFormatter.ISO_DATE);
 

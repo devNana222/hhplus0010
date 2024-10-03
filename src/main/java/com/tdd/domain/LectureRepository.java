@@ -10,6 +10,6 @@ public interface LectureRepository{
     Optional<Lecture> findByLectureId(long LectureId);
     List<Lecture> findAll();
     List<Lecture> findAvailableLecturesByDate(LocalDate date);
-    Optional<Lecture> findByLectureIdWithLock(long lectureId);
+    Optional<Lecture> findByLectureIdWithLock(long id);
     Lecture save(Lecture lecture);
 }
