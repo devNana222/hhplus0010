@@ -31,7 +31,7 @@ public class LectureHistoryService {
         Student student = studentJpaAdaptor.findByStudentId(studentId)
                 .orElseThrow(() -> new BusinessException(LectureErrorCode.INVALID_STUDENT));
 
-        return lectureHistoryJpaAdaptor.findAllByStudentId(student);
+        return lectureHistoryJpaAdaptor.findAllByStudentId(student.getStudentId());
     }
 
 }

@@ -40,7 +40,7 @@ class LectureHistoryServiceTest {
     @BeforeEach
     void setUp() {
         validStudentId = 1L;
-        mockStudent = new Student(1L, "nana"); // 필요한 필드 값을 설정해도 좋습니다.
+        mockStudent = new Student(1L, "nana");
         mockLectureHistory = new ArrayList<>();
     }
 
@@ -49,7 +49,7 @@ class LectureHistoryServiceTest {
     void getStudentHistory_SUCCESS() {
 
         when(studentJpaAdaptor.findByStudentId(validStudentId)).thenReturn(Optional.of(mockStudent));
-        when(lectureHistoryJpaAdaptor.findAllByStudentId(mockStudent)).thenReturn(mockLectureHistory);
+        when(lectureHistoryJpaAdaptor.findAllByStudentId(mockStudent.getStudentId())).thenReturn(mockLectureHistory);
 
         LectureCommand.History command = new LectureCommand.History(validStudentId);
 
