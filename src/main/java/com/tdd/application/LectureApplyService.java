@@ -9,8 +9,9 @@ import com.tdd.infrastructure.entity.Lecture;
 import com.tdd.infrastructure.entity.LectureHistory;
 import com.tdd.infrastructure.entity.Student;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static com.tdd.domain.exception.LectureErrorCode.*;
 
@@ -35,15 +36,19 @@ public class LectureApplyService {
         Lecture lecture = lectureJpaAdaptor.findByLectureIdWithLock(command.lectureId()).orElseThrow(()-> new BusinessException(INVALID_LECTURE));
         Student student = studentJpaAdaptor.findByStudentId(command.studentId()).orElseThrow(()-> new BusinessException(INVALID_STUDENT));
 
-        if(lecture.getCapacity() <=0){
+        if(lecture.getCapacity() <=0)
             throw new BusinessException(OVERCAPACITY_LECTURE);
-        }
 
         lecture.LectureCapacityReduce();
 
         LectureHistory history = new LectureHistory(student, lecture);
-        lectureHistoryJpaAdaptor.save(history);
 
+        Optional<Long> historyId = lectureHistoryJpaAdaptor.findByLectureIdAndStudentId(command.lectureId(), command.studentId());
+
+        if(historyId.isPresent())
+          throw new BusinessException(APPLIED_LECTURE);
+
+        lectureHistoryJpaAdaptor.save(history);
     }
 
 }

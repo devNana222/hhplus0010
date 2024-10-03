@@ -23,17 +23,17 @@ public class LectureHistory {
 
     @ManyToOne
     @JoinColumn(name="student_id")
-    private Student studentId;
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="lecture_id")
-    private Lecture lectureId;
+    private Lecture lecture;
 
     @Column(name="reg_date")
     private LocalDateTime regDate = LocalDateTime.now();
 
-    public LectureHistory(Student studentId, Lecture lectureId) {
-        this.studentId = studentId;
-        this.lectureId = lectureId;
+    public LectureHistory(Student student, Lecture lecture) {
+        this.student = student;
+        this.lecture = lecture;
     }
 }

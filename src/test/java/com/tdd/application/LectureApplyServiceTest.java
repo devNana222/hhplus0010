@@ -95,4 +95,25 @@ class LectureApplyServiceTest {
 
     }
 
+    @Test
+    @DisplayName("🔴특강 신청 실패3 - 이미 신청한 강의")
+    void applyLectureTest3_Fail() {
+        //given
+        LectureCommand.Apply command = new LectureCommand.Apply(2L,2L);
+
+        Lecture lecture = new Lecture(2L, "특강2", 30L, LocalDate.parse("2024-10-01", DateTimeFormatter.ISO_DATE), "강사"); // capacity를 30으로 설정
+        Student student = new Student(2L, "학생명2"); // 학생 객체도 초기화
+
+        LectureHistory history = new LectureHistory(student, lecture);
+        // when
+        when(lectureJpaAdaptor.findByLectureIdWithLock(2L)).thenReturn(Optional.of(lecture));
+        when(studentJpaAdaptor.findByStudentId(2L)).thenReturn(Optional.of(student));
+
+        // then
+        assertThrows(BusinessException.class, () -> lectureApplyService.apply(command));
+
+        verify(lectureHistoryJpaAdaptor, never()).save(any(LectureHistory.class));
+
+    }
+
 }

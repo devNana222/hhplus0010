@@ -5,6 +5,7 @@ import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -17,11 +18,11 @@ public interface LectureJpaRepository extends JpaRepository<Lecture, Long> {
     List<Lecture> findAll();
 
     @Query("SELECT l FROM Lecture l WHERE l.enrollStartDate = :date AND l.capacity > 0")
-    List<Lecture> findAvailableLecturesByDate(LocalDate date);
+    List<Lecture> findAvailableLecturesByDate(@Param("date")LocalDate date);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT l FROM Lecture l WHERE l.lectureId = :lectureId ")
-    Optional<Lecture> findByLectureIdWithLock(long lectureId);
+    Optional<Lecture> findByLectureIdWithLock(@Param("lectureId") long lectureId);
 
     Lecture save(Lecture lecture);
 }
