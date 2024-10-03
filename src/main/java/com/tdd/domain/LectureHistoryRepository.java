@@ -18,5 +18,7 @@ public interface LectureHistoryRepository{
 
     List<LectureHistory> findAllBylectureId(Long lectureId);
 
+    Long countByLectureIdAndStudentId(Long lectureId, Long studentId);
+
     void deleteAll();
 }

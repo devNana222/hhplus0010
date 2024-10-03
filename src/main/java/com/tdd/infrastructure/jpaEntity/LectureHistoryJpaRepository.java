@@ -20,6 +20,11 @@ public interface LectureHistoryJpaRepository extends JpaRepository<LectureHistor
     @Query("SELECT h.historyId FROM LectureHistory h WHERE h.lecture.lectureId = :lectureId and h.student.studentId = :studentId")
     Optional<Long> findByLectureIdAndStudentId(@Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
 
+
+    @Query("SELECT count(h.historyId) FROM LectureHistory h WHERE h.lecture.lectureId = :lectureId and h.student.studentId = :studentId")
+    Long countByLectureIdAndStudentId(@Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
+
+
     @Query("SELECT h FROM LectureHistory h WHERE h.lecture.lectureId = :lectureId")
     List<LectureHistory> findAllBylectureId(@Param("lectureId") Long lectureId);
     void deleteAll();

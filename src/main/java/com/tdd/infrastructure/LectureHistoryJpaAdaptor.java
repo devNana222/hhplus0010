@@ -37,6 +37,11 @@ public class LectureHistoryJpaAdaptor implements LectureHistoryRepository {
     }
 
     @Override
+    public Long countByLectureIdAndStudentId(Long lectureId, Long studentId){
+        return lectureHistoryJpaRepository.countByLectureIdAndStudentId(lectureId, studentId);
+    }
+
+    @Override
     public LectureHistory save(LectureHistory lecture){
         return lectureHistoryJpaRepository.save(lecture);
     }
