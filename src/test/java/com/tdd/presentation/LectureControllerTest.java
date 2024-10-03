@@ -172,12 +172,12 @@ class LectureControllerTest {
         // when & then
         mockMvc.perform(get("/lecture/1/list"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lectureId.lectureNm").value("특강1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lecture.lectureNm").value("특강1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].regDate").value("2024-10-03T12:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lectureId.instructor").value("허재"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lectureId.lectureNm").value("특강2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lecture.instructor").value("허재"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lecture.lectureNm").value("특강2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].regDate").value("2024-10-05T10:00:00"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lectureId.instructor").value("이석범"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lecture.instructor").value("이석범"));
 
     }
 }
